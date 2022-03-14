@@ -441,7 +441,7 @@ module SimpleXlsxReader
 
           if fraction_of_24 > 0 # there is a time associated
             seconds = (fraction_of_24 * 86400).round
-            return Time.utc(date.year, date.month, date.day) + seconds
+            return Time.new(date.year, date.month, date.day) + seconds
           else
             return date
           end

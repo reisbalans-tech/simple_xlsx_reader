@@ -13,9 +13,9 @@ describe SimpleXlsxReader do
           ["Big Bird", "Teacher"]],
       "Posts"=>
         [["Author Name", "Title", "Body", "Created At", "Comment Count", "URL"],
-          ["Big Bird", "The Number 1", "The Greatest", Time.parse("2002-01-01 11:00:00 UTC"), 1, SXR::Hyperlink.new("http://www.example.com/hyperlink-function", "This uses the HYPERLINK() function")],
-          ["Big Bird", "The Number 2", "Second Best", Time.parse("2002-01-02 14:00:00 UTC"), 2, SXR::Hyperlink.new("http://www.example.com/hyperlink-gui", "This uses the hyperlink GUI option")],
-          ["Big Bird", "Formula Dates", "Tricky tricky", Time.parse("2002-01-03 14:00:00 UTC"), 0, nil],
+          ["Big Bird", "The Number 1", "The Greatest", Time.parse("2002-01-01 11:00:00"), 1, SXR::Hyperlink.new("http://www.example.com/hyperlink-function", "This uses the HYPERLINK() function")],
+          ["Big Bird", "The Number 2", "Second Best", Time.parse("2002-01-02 14:00:00"), 2, SXR::Hyperlink.new("http://www.example.com/hyperlink-gui", "This uses the hyperlink GUI option")],
+          ["Big Bird", "Formula Dates", "Tricky tricky", Time.parse("2002-01-03 14:00:00"), 0, nil],
           ["Empty Eagress", nil, "The title, date, and comment have types, but no values", nil, nil, nil]]
     }
   end
@@ -85,12 +85,12 @@ describe SimpleXlsxReader do
 
       it 'reads time styles' do
         described_class.cast('41505.77083', nil, :time).
-          must_equal Time.parse('2013-08-19 18:30 UTC')
+          must_equal Time.parse('2013-08-19 18:30')
       end
 
       it 'reads date_time styles' do
         described_class.cast('41505.77083', nil, :date_time).
-          must_equal Time.parse('2013-08-19 18:30 UTC')
+          must_equal Time.parse('2013-08-19 18:30')
       end
 
       it 'reads number types styled as dates' do
@@ -100,17 +100,17 @@ describe SimpleXlsxReader do
 
       it 'reads number types styled as times' do
         described_class.cast('41505.77083', 'n', :time).
-          must_equal Time.parse('2013-08-19 18:30 UTC')
+          must_equal Time.parse('2013-08-19 18:30')
       end
 
       it 'reads less-than-zero complex number types styled as times' do
         described_class.cast('6.25E-2', 'n', :time).
-          must_equal Time.parse('1899-12-30 01:30:00 UTC')
+          must_equal Time.parse('1899-12-30 01:30:00')
       end
 
       it 'reads number types styled as date_times' do
         described_class.cast('41505.77083', 'n', :date_time).
-          must_equal Time.parse('2013-08-19 18:30 UTC')
+          must_equal Time.parse('2013-08-19 18:30')
       end
 
       it 'raises when date-styled values are not numerical' do
